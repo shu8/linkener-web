@@ -1,0 +1,7 @@
+version: "3.3"
+services:
+  url_shortener_web:
+    build: .
+    ports:
+      - 5000:80
+    container_name: url_shortener_web
