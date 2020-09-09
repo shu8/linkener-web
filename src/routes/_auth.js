@@ -1,8 +1,7 @@
 import { writable, get } from 'svelte/store';
 import { goto } from '@sapper/app'
-import { API_URL } from './_constants.js';
 
-let logout, login, register, updatePassword, accessToken;
+let logout, login, register, updatePassword, accessTokenStore, apiUrlStore;
 
 if (typeof window === 'object') {
   const username = sessionStorage.getItem('username');
@@ -13,23 +12,32 @@ if (typeof window === 'object') {
     : sessionStorage.removeItem('username')
   );
 
-  const token = sessionStorage.getItem('accessToken');
-  const tokenStore = writable(token || null);
+  const accessToken = sessionStorage.getItem('accessToken');
+  accessTokenStore = writable(accessToken || null);
 
-  tokenStore.subscribe(value => value
+  accessTokenStore.subscribe(value => value
     ? sessionStorage.setItem('accessToken', value)
     : sessionStorage.removeItem('accessToken')
   );
 
+  const apiUrl = sessionStorage.getItem('apiUrl');
+  apiUrlStore = writable(apiUrl || null);
+
+  apiUrlStore.subscribe(value => value
+    ? sessionStorage.setItem('apiUrl', value)
+    : sessionStorage.removeItem('apiUrl')
+  );
+
   logout = () => {
     usernameStore.set(null);
-    tokenStore.set(null);
+    accessTokenStore.set(null);
+    apiUrlStore.set(null);
     goto('/');
   }
 
   login = async (username, password) => {
     try {
-      const res = await fetch(`${API_URL}auth/new_token`, {
+      const res = await fetch(`${get(apiUrlStore)}auth/new_token`, {
         method: 'POST',
         body: JSON.stringify({
           username,
@@ -42,7 +50,7 @@ if (typeof window === 'object') {
 
       const text = await res.text();
       if (res.ok) {
-        tokenStore.set(text);
+        accessTokenStore.set(text);
         usernameStore.set(username);
         return text;
       } else {
@@ -55,7 +63,7 @@ if (typeof window === 'object') {
   };
 
   register = async (username, password) => {
-    return await fetch(`${API_URL}auth/users`, {
+    return await fetch(`${get(apiUrlStore)}auth/users`, {
       method: 'POST',
       body: JSON.stringify({
         username,
@@ -69,7 +77,7 @@ if (typeof window === 'object') {
 
   updatePassword = async (password) => {
     const username = get(usernameStore);
-    return await fetch(`${API_URL}auth/users/${username}`, {
+    return await fetch(`${get(apiUrlStore)}auth/users/${username}`, {
       method: 'PUT',
       body: JSON.stringify({
         password,
@@ -80,10 +88,8 @@ if (typeof window === 'object') {
       },
     });
   }
-
-  accessToken = tokenStore;
 }
 
 export {
-  logout, login, register, updatePassword, accessToken,
+  logout, login, register, updatePassword, accessTokenStore, apiUrlStore,
 };

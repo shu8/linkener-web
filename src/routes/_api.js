@@ -1,6 +1,5 @@
 import { get } from 'svelte/store';
-import { accessToken, logout } from './_auth.js';
-import { API_URL } from './_constants.js';
+import { accessTokenStore, logout, apiUrlStore } from './_auth.js';
 
 const handleRes = res => {
   if (!res.ok && res.status === 401) {
@@ -11,20 +10,20 @@ const handleRes = res => {
 }
 
 export const fetchShortURLs = async () => {
-  const res = await fetch(`${API_URL}urls/`, {
-    headers: { 'Authorization': get(accessToken) }
+  const res = await fetch(`${get(apiUrlStore)}urls/`, {
+    headers: { 'Authorization': get(accessTokenStore) }
   });
 
   return handleRes(res);
 };
 
 export const newShortURL = async (data) => {
-  const res = await fetch(`${API_URL}urls/`, {
+  const res = await fetch(`${get(apiUrlStore)}urls/`, {
     method: 'POST',
     body: JSON.stringify(data),
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': get(accessToken),
+      'Authorization': get(accessTokenStore),
     },
   });
 
@@ -32,7 +31,7 @@ export const newShortURL = async (data) => {
 };
 
 export const updateShortURL = async (slug, newURL, allowedVisits, password) => {
-  const res = await fetch(`${API_URL}urls/${slug}`, {
+  const res = await fetch(`${get(apiUrlStore)}urls/${slug}`, {
     method: 'PUT',
     body: JSON.stringify({
       url: newURL,
@@ -41,7 +40,7 @@ export const updateShortURL = async (slug, newURL, allowedVisits, password) => {
     }),
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': get(accessToken),
+      'Authorization': get(accessTokenStore),
     },
   });
 
@@ -49,11 +48,11 @@ export const updateShortURL = async (slug, newURL, allowedVisits, password) => {
 };
 
 export const deleteShortURL = async (slug) => {
-  const res = await fetch(`${API_URL}urls/${slug}`, {
+  const res = await fetch(`${get(apiUrlStore)}urls/${slug}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': get(accessToken),
+      'Authorization': get(accessTokenStore),
     },
   });
 

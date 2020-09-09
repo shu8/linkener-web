@@ -1,9 +1,10 @@
 <script>
   import { Input } from "svelte-chota";
-  import { goto } from '@sapper/app'
+  import { goto } from "@sapper/app";
 
   import { register } from "./_auth.js";
 
+  let apiUrlError = false;
   let usernameError = false;
   let passwordError = false;
 
@@ -26,12 +27,20 @@
 
   const handleValidation = async (event) => {
     const el = event.target;
-    if (el.id === "username") usernameError = !el.value;
+    if (el.id === "apiUrl") apiUrlError = !el.value;
+    else if (el.id === "username") usernameError = !el.value;
     else passwordError = password !== confirmPassword;
   };
 </script>
 
 <form on:submit|preventDefault={handleSubmit} on:input={handleValidation}>
+   <Input
+    error={apiUrlError}
+    placeholder="API URL (e.g. http://localhost:3000/api/)"
+    id="apiUrl"
+    name="apiUrl"
+    type="url"
+    required />
   <Input
     error={usernameError}
     placeholder="Username"

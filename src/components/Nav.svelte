@@ -1,12 +1,12 @@
 <script>
   import { Nav } from "svelte-chota";
 
-  import { accessToken, logout } from "../routes/_auth.js";
+  import { accessTokenStore, logout } from "../routes/_auth.js";
 
   export let segment;
 </script>
 
-{#if $accessToken}
+{#if $accessTokenStore}
   <Nav>
     <a slot="left" href="/" class="brand">URL Shortener</a>
     <a
