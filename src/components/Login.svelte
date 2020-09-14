@@ -29,6 +29,7 @@ Please login with the form below, or register <a href="/register">here</a>.
 <form on:submit|preventDefault={handleSubmit} on:input={handleValidation}>
   <Input
     error={apiUrlError}
+    value={$apiUrlStore}
     placeholder="API URL (e.g. http://localhost:3000/api/)"
     id="apiUrl"
     name="apiUrl"

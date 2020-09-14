@@ -31,7 +31,6 @@ if (typeof window === 'object') {
   logout = () => {
     usernameStore.set(null);
     accessTokenStore.set(null);
-    apiUrlStore.set(null);
     goto('/');
   }
 

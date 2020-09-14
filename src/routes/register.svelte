@@ -2,7 +2,7 @@
   import { Input } from "svelte-chota";
   import { goto } from "@sapper/app";
 
-  import { register } from "./_auth.js";
+  import { register, apiUrlStore } from "./_auth.js";
 
   let apiUrlError = false;
   let usernameError = false;
@@ -12,6 +12,7 @@
     if (usernameError || passwordError)
       return alert("Please enter a valid username and password");
 
+    apiUrlStore.set(apiUrl.value);
     const { username, password } = event.target;
     const res = await register(username.value, password.value);
     if (res.ok) {
@@ -36,6 +37,7 @@
 <form on:submit|preventDefault={handleSubmit} on:input={handleValidation}>
    <Input
     error={apiUrlError}
+    value={$apiUrlStore}
     placeholder="API URL (e.g. http://localhost:3000/api/)"
     id="apiUrl"
     name="apiUrl"
