@@ -6,7 +6,7 @@
 
   export let details, highlight;
 
-  const { stats, slug, date_created: dateCreated } = details;
+  const { visits, slug, date_created: dateCreated } = details;
   let { url, allowed_visits: allowedVisits } = details;
 
   let expanded = false;
@@ -104,7 +104,7 @@
         {:else}{url}{/if}
       </span>
       <span class="visits">
-        Visits: {stats.count}/{#if edit}
+        Visits: {visits.length}/{#if edit}
           <Input
             bind:value={editAllowedVisits}
             number
