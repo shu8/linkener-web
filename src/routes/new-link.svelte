@@ -46,14 +46,15 @@
 
 <div class="new-link">
   <form on:submit|preventDefault={handleSubmit} on:input={handleValidation}>
-    <Input id="url" name="url" placeholder="URL" error={urlError} required />
+    <Input id="url" type="url" name="url" placeholder="URL" error={urlError} required />
     <Input
       id="slugLength"
       name="slugLength"
-      placeholder="Slug length (min 5)"
+      placeholder="Slug length (default 5)"
       number
       default="5"
-      min="5" />
+      min="5"
+    />
     <Input
       id="allowedVisits"
       name="allowedVisits"
