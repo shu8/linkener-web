@@ -31,13 +31,15 @@ export const newShortURL = async (data) => {
 };
 
 export const updateShortURL = async (slug, newURL, allowedVisits, password) => {
+  const body = {};
+  if (newURL) body.url = newURL;
+  if (allowedVisits) body.allowed_visits = allowedVisits;
+  if (typeof password !== 'undefined') body.password = password;
+  if (!Object.keys(body).length) return null;
+
   const res = await fetch(`${get(apiUrlStore)}urls/${slug}`, {
     method: 'PUT',
-    body: JSON.stringify({
-      url: newURL,
-      allowed_visits: allowedVisits,
-      password,
-    }),
+    body: JSON.stringify(body),
     headers: {
       'Content-Type': 'application/json',
       'Authorization': get(accessTokenStore),

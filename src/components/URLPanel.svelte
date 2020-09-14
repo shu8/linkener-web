@@ -6,7 +6,8 @@
 
   export let details, highlight;
 
-  const { visits, slug, date_created: dateCreated } = details;
+  const PASSSWORD_UNCHANGED_TEXT = "(password unchanged)";
+  const { visits, slug, password, date_created: dateCreated } = details;
   let { url, allowed_visits: allowedVisits } = details;
 
   let expanded = false;
@@ -14,7 +15,7 @@
 
   let edit = false;
   let editURL = url;
-  let editPassword = "";
+  let editPassword = password ? PASSSWORD_UNCHANGED_TEXT : "";
   let editAllowedVisits = allowedVisits > 0 ? allowedVisits : 0;
 
   const togglePanel = () => {
@@ -37,7 +38,7 @@
       slug,
       editURL,
       editAllowedVisits,
-      editPassword
+      editPassword === PASSSWORD_UNCHANGED_TEXT ? null : editPassword
     );
 
     if (res.ok) {
