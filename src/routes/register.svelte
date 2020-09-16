@@ -34,6 +34,10 @@
   };
 </script>
 
+<svelte:head>
+	<title>Register | Linkener Admin</title>
+</svelte:head>
+
 <form on:submit|preventDefault={handleSubmit} on:input={handleValidation}>
    <Input
     error={apiUrlError}

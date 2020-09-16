@@ -26,6 +26,10 @@
     (passwordError = password !== confirmPassword);
 </script>
 
+<svelte:head>
+	<title>Settings | Linkener Admin</title>
+</svelte:head>
+
 <div>
   If you want to update your password, please use the form below. <br />
   <br />

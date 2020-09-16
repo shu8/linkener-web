@@ -5,6 +5,10 @@
 	import { accessTokenStore } from "./_auth.js";
 </script>
 
+<svelte:head>
+	<title>Linkener Admin</title>
+</svelte:head>
+
 {#if $accessTokenStore}
 	<CurrentLinks />
 {:else}

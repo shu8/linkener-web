@@ -1,5 +1,5 @@
 body {
-  padding-top: 10px;
+  padding-top: 10px !important;
 }
 
 h1,
@@ -32,4 +32,13 @@ code {
 
 input + input {
   margin-top: 10px;
+}
+
+.nav .brand img {
+  max-height: unset;
+  width: 100px;
+}
+
+.nav .active {
+  font-weight: bold;
 }

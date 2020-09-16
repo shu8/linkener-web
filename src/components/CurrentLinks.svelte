@@ -19,11 +19,17 @@
 {#await res}
   <p>Loading...</p>
 {:then urls}
-  {#each urls as url}
-    <UrlPanel
-      details={url}
-      highlight={queryParams.get('newURL') === url.slug} />
-  {/each}
+  {#if !urls.length}
+    <p>
+      This Linkener instance has no Short URLs yet! Do you want to <a href="/new-link">make one now?</a>
+    </p>
+  {:else}
+    {#each urls as url}
+      <UrlPanel
+        details={url}
+        highlight={queryParams.get('newURL') === url.slug} />
+    {/each}
+  {/if}
 {:catch err}
-  <p>Error: ${err}</p>
+  <p>Error: Failed to fetch URLs, check the console for more information!</p>
 {/await}
