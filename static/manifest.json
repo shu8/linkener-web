@@ -5,6 +5,7 @@
 	"short_name": "linkener-web",
 	"display": "minimal-ui",
 	"start_url": "/",
+	"scope": "/",
 	"icons": [
 		{
 			"src": "logo.png",
