@@ -2,7 +2,7 @@
   import { Input } from "svelte-chota";
   import { goto } from "@sapper/app";
 
-  import { register, apiUrlStore } from "./_auth.js";
+  import { register, apiUrlStore, accessTokenStore } from "./_auth.js";
 
   let apiUrlError = false;
   let usernameError = false;
@@ -38,37 +38,41 @@
 	<title>Register | Linkener Admin</title>
 </svelte:head>
 
-<form on:submit|preventDefault={handleSubmit} on:input={handleValidation}>
-   <Input
-    error={apiUrlError}
-    value={$apiUrlStore}
-    placeholder="API URL (e.g. http://localhost:3000/api/)"
-    id="apiUrl"
-    name="apiUrl"
-    type="url"
-    required />
-  <Input
-    error={usernameError}
-    placeholder="Username"
-    id="username"
-    name="username"
-    autocomplete="username"
-    required />
-  <Input
-    error={passwordError}
-    bind:value={password}
-    password
-    placeholder="Password"
-    id="password"
-    name="password"
-    required />
-  <Input
-    error={passwordError}
-    bind:value={confirmPassword}
-    password
-    placeholder="Confirm password"
-    id="confirmPassword"
-    name="confirmPassword"
-    required />
-  <Input type="submit" value="Login" />
-</form>
+{#if $accessTokenStore}
+  <form on:submit|preventDefault={handleSubmit} on:input={handleValidation}>
+    <Input
+      error={apiUrlError}
+      value={$apiUrlStore}
+      placeholder="API URL (e.g. http://localhost:3000/api/)"
+      id="apiUrl"
+      name="apiUrl"
+      type="url"
+      required />
+    <Input
+      error={usernameError}
+      placeholder="Username"
+      id="username"
+      name="username"
+      autocomplete="username"
+      required />
+    <Input
+      error={passwordError}
+      bind:value={password}
+      password
+      placeholder="Password"
+      id="password"
+      name="password"
+      required />
+    <Input
+      error={passwordError}
+      bind:value={confirmPassword}
+      password
+      placeholder="Confirm password"
+      id="confirmPassword"
+      name="confirmPassword"
+      required />
+    <Input type="submit" value="Login" />
+  </form>
+{:else}
+  <p>You are already logged in! Please log out to register a new account</p>
+{/if}

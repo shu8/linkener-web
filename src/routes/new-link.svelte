@@ -4,6 +4,7 @@
   import { Input, Field } from "svelte-chota";
 
   import { newShortURL } from "./_api";
+  import { accessTokenStore } from "./_auth.js";
 
   let formError = true;
   const handleSubmit = async (event) => {
@@ -48,35 +49,39 @@
 	<title>New Link | Linkener Admin</title>
 </svelte:head>
 
-<div class="new-link">
-  <form on:submit|preventDefault={handleSubmit} on:input={handleValidation}>
-    <Field label="URL">
-      <Input id="url" type="url" name="url" placeholder="e.g. https://doma.in/long-scary-url-X45m-2ng8a-nw4" error={urlError} required />
-    </Field>
-    <Field label="Slug length (default 5)">
-      <Input
-        id="slugLength"
-        name="slugLength"
-        placeholder="e.g. 5"
-        number
-        default="5"
-        min="5"
-      />
-    </Field>
-    <Field label="Maximum visits (optional)">
-      <Input
-        id="allowedVisits"
-        name="allowedVisits"
-        placeholder="e.g. 100"
-        number
-        min="0" />
-    </Field>
-    <Field label="Custom slug (optional)">
-      <Input id="slug" name="slug" placeholder="e.g. blog" />
-    </Field>
-    <Field label="Password (optional)">
-      <Input password id="password" name="password" placeholder="e.g. supersecretpassword" />
-    </Field>
-    <Input type="submit" value="Save URL" onsubmit={handleSubmit} />
-  </form>
-</div>
+{#if $accessTokenStore}
+  <div class="new-link">
+    <form on:submit|preventDefault={handleSubmit} on:input={handleValidation}>
+      <Field label="URL">
+        <Input id="url" type="url" name="url" placeholder="e.g. https://doma.in/long-scary-url-X45m-2ng8a-nw4" error={urlError} required />
+      </Field>
+      <Field label="Slug length (default 5)">
+        <Input
+          id="slugLength"
+          name="slugLength"
+          placeholder="e.g. 5"
+          number
+          default="5"
+          min="5"
+        />
+      </Field>
+      <Field label="Maximum visits (optional)">
+        <Input
+          id="allowedVisits"
+          name="allowedVisits"
+          placeholder="e.g. 100"
+          number
+          min="0" />
+      </Field>
+      <Field label="Custom slug (optional)">
+        <Input id="slug" name="slug" placeholder="e.g. blog" />
+      </Field>
+      <Field label="Password (optional)">
+        <Input password id="password" name="password" placeholder="e.g. supersecretpassword" />
+      </Field>
+      <Input type="submit" value="Save URL" onsubmit={handleSubmit} />
+    </form>
+  </div>
+{:else}
+  <p>You need to be logged in to create a new Short URL.</p>
+{/if}

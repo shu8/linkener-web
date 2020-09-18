@@ -2,7 +2,7 @@
   import { Input } from "svelte-chota";
   import { goto } from '@sapper/app'
 
-  import { updatePassword } from "./_auth.js";
+  import { updatePassword, accessTokenStore } from "./_auth.js";
 
   let passwordError = true;
 
@@ -30,28 +30,32 @@
 	<title>Settings | Linkener Admin</title>
 </svelte:head>
 
-<div>
-  If you want to update your password, please use the form below. <br />
-  <br />
-  <form on:submit|preventDefault={handleSubmit} on:input={handleValidation}>
-    <Input
-      bind:value={password}
-      id="password"
-      name="password"
-      required
-      password
-      autocomplete="new-password"
-      error={passwordError}
-      placeholder="New password" />
-    <Input
-      bind:value={confirmPassword}
-      id="confirmPassword"
-      name="confirmPassword"
-      required
-      password
-      autocomplete="new-password"
-      error={passwordError}
-      placeholder="Confirm password" />
-    <Input type="submit" value="Update password" />
-  </form>
-</div>
+{#if $accessTokenStore}
+  <div>
+    If you want to update your password, please use the form below. <br />
+    <br />
+    <form on:submit|preventDefault={handleSubmit} on:input={handleValidation}>
+      <Input
+        bind:value={password}
+        id="password"
+        name="password"
+        required
+        password
+        autocomplete="new-password"
+        error={passwordError}
+        placeholder="New password" />
+      <Input
+        bind:value={confirmPassword}
+        id="confirmPassword"
+        name="confirmPassword"
+        required
+        password
+        autocomplete="new-password"
+        error={passwordError}
+        placeholder="Confirm password" />
+      <Input type="submit" value="Update password" />
+    </form>
+  </div>
+{:else}
+  <p>You need to be logged in to change your settings.</p>
+{/if}
