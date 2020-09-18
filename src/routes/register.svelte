@@ -17,7 +17,7 @@
     const res = await register(username.value, password.value);
     if (res.ok) {
       alert("Succesfully registered!");
-      goto("/");
+      goto("#");
     } else {
       alert("There was an error registering, please try again");
     }

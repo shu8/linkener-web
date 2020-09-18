@@ -31,7 +31,7 @@ if (typeof window === 'object') {
   logout = () => {
     usernameStore.set(null);
     accessTokenStore.set(null);
-    goto('/');
+    goto('#');
   }
 
   login = async (username, password) => {

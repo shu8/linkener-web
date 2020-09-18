@@ -25,7 +25,7 @@
   };
 </script>
 
-Please login with the form below, or register <a href="/register">here</a>.
+Please login with the form below, or register <a href="register">here</a>.
 <form on:submit|preventDefault={handleSubmit} on:input={handleValidation}>
   <Input
     error={apiUrlError}

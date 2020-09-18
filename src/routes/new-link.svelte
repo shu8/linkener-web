@@ -21,7 +21,7 @@
     const res = await newShortURL(data);
     if (res.ok) {
       const newURL = await res.json();
-      goto(`/?newURL=${newURL.slug}`);
+      goto(`?newURL=${newURL.slug}`);
     } else {
       const text = await res.text();
       alert("There was an error saving the new URL: " + text);

@@ -13,7 +13,7 @@
     const res = await updatePassword(password.value);
     if (res.ok) {
       alert("Successfully changed password!");
-      goto("/");
+      goto("#");
     } else {
       alert("Failed to update password, please try again");
     }
