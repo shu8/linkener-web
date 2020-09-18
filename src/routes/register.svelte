@@ -71,7 +71,7 @@
       id="confirmPassword"
       name="confirmPassword"
       required />
-    <Input type="submit" value="Login" />
+    <Input type="submit" value="Register" />
   </form>
 {:else}
   <p>You are already logged in! Please log out to register a new account</p>

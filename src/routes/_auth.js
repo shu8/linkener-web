@@ -83,7 +83,7 @@ if (typeof window === 'object') {
       }),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': get(accessToken),
+        'Authorization': get(accessTokenStore),
       },
     });
   }
