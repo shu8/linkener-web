@@ -38,7 +38,7 @@
 	<title>Register | Linkener Admin</title>
 </svelte:head>
 
-{#if $accessTokenStore}
+{#if !$accessTokenStore}
   <form on:submit|preventDefault={handleSubmit} on:input={handleValidation}>
     <Input
       error={apiUrlError}
